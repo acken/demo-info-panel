@@ -32,9 +32,10 @@ export class PublicationsInterceptorHandler {
         publicationType: 'Important',
         targetDepartments: [],
         shortMessage: 'Faster feedback from real stakeholders at a lower cost!',
-        body: 'When building this application the functional requirement and and user experience breakdowns took us about 1.5 days to complete. This entire frontend application was ' +
-               'built in 6 hours by one of our senior backend developers who has little TypeScript and react experience. However what he did have was ' +
-               'the Uniscale IDE plugin with its specification prompting and the GitHub copilot to talk to.\n\n' +'When using the Uniscale specification and UX validation iteration approach we can deliver more value to our customers at a lower cost. ' +
+        body: 'We iterated our way from idea to a fully working frontend in 3.5 days!\n\n' + 
+               'When building this application the functional requirement, user experience breakdowns and service modelling took us about 1.5 days to complete. This entire frontend application was ' +
+               'built in 6 hours by one of our senior backend developers who has little TypeScript and react experience. However what he DID have was ' +
+               'the Uniscale IDE plugin with its specification prompting functionality and the GitHub Copilot to pair program with!\n\n' +'When using the Uniscale specification and UX validation iteration approach we can deliver more value to our customers at a lower cost. ' +
                'We iterated our way from an idea to a fully built user experience in 3.5 days! This took us through multiple validation iterations with ' +
                'stakeholders and team members to understand what our requirements were.\n\n' + 
                'Do you want to give it a shot yourself?',
