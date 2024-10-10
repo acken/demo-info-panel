@@ -18,8 +18,8 @@ export class PublicationsInterceptorHandler {
         targetDepartments: [],
         shortMessage: 'Do not waste your time on mass content production. Instead spend the time refining the quality of what you already have.',
         body: 'Requirements and documentation are written for others to read. If we continuously keep writing and designing new content we are just ' +
-              'making it harder for our stakeholders to be aligned. What is important is that we refine and structure the content we already have. ' +
-              'If you want high alignment refine content from specialists in to Uniscale for a single source of truth that all stakeholders can ' +
+              'making it harder for our stakeholders to be aligned. What is important is that we refine and structure the content we already have.\n\n' +
+              'If you want high alignment refine content from specialists tooling in to Uniscale for a single source of truth that all stakeholders can ' +
               'align on.',
         actionable: false,
         publishedAt: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000)
