@@ -5,6 +5,7 @@ import { initializeDispatcher } from '../uniscale-session/dispatcher';
 import { DispatcherSession } from '@uniscale-sdk/ActorCharacter-InfoPanel';
 import { SearchAndFilterPublications } from '@uniscale-sdk/ActorCharacter-InfoPanel/sdk/InfoPanelPlayground/Publications_1_0/ServiceToModule/Publications/SearchAndFilterPublicatoins';
 import { PublicationFull } from '@uniscale-sdk/ActorCharacter-InfoPanel/sdk/InfoPanelPlayground/Publications/Publications';
+import { PublicationsInterceptorHandler } from '../uniscale-session/publications-interceptors';
 
 /** 
  * Using the Uniscale SDK to call defined endpoints through a dispatcher session
@@ -80,14 +81,15 @@ interface PersonalPublicationsProps {
 }
 
 const PersonalPublications: React.FC<PersonalPublicationsProps> = ({ publicationTypeFilter, onPublicationCreated }) => {
-    const [dispatcher, setDispatcher] = React.useState<DispatcherSession>();
     const [publications, setPublications] = React.useState<PublicationFull[]>([]);
     const [onlyActionable, setOnlyActionable] = React.useState<boolean>(false);
     const [searchQuery, setSearchQuery] = React.useState<string>('');
     const [thisWeekOnly, setThisWeekOnly] = React.useState<boolean>(false);
 
     const fetchPublications = async (isActionable: boolean, query: string, onlyCurrentWeek: boolean, type: string) => {
-        if (!dispatcher) return;
+        console.log("Pre - Fetching publications")
+        const dispatcher = await initializeDispatcher();
+        console.log("Fetching publications")
 
         const input = {
             publicationType: type === 'All' ? undefined : type,
@@ -102,14 +104,6 @@ const PersonalPublications: React.FC<PersonalPublicationsProps> = ({ publication
             setPublications(result.value || []);
         }
     };
-
-    useEffect(() => {
-        const initialize = async () => {
-            const dispatcher = await initializeDispatcher();
-            setDispatcher(dispatcher);
-        };
-        initialize();
-    }, []);
 
     useEffect(() => {
         fetchPublications(onlyActionable, searchQuery, thisWeekOnly, publicationTypeFilter);

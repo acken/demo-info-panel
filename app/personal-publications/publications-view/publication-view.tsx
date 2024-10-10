@@ -110,7 +110,12 @@ const PublicationView: React.FC<PublicationViewProps> = ({
                     {publication.shortMessage}
                 </Typography>
                 <Typography variant="body1" mt={1} flexGrow={1}>
-                    {publication.body}
+                    {(publication.body ? publication.body : '').split('\n').map((line, index) => (
+                        <React.Fragment key={index}>
+                            {line}
+                            <br />
+                        </React.Fragment>
+                    ))}
                 </Typography>
                 <Box sx={{ mt: 3, paddingBottom: "20px" }}>
                     {publication.actionable && (

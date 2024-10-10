@@ -1,12 +1,14 @@
 "use client"
+
 import RightToolbar from "./navigation/right-toolbar";
 import "./globals.css"; // Assuming you have a CSS file for styling
 import Logo from "./navigation/logo";
 import TopBar from "./personal-publications/top-bar";
 import PersonalPublications from "./personal-publications/personal-publications";
 
-import { useState } from 'react';
+import { use, useEffect, useState } from 'react';
 import { PublicationFull } from "@uniscale-sdk/ActorCharacter-InfoPanel/sdk/InfoPanelPlayground/Publications/Publications";
+import { PublicationsInterceptorHandler } from "./uniscale-session/publications-interceptors";
 
 export default function Home() {
   const [publicationTypeFilter, setPublicationTypeFilter] = useState<string>('');
