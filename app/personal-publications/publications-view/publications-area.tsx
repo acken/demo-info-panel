@@ -16,7 +16,7 @@ export default function PublicationsArea({ publications, onOnlyWeeklyFilter }: P
                 <PublicationsList 
                     onTabChange={onOnlyWeeklyFilter}
                     publications={publications} 
-                    onPublicationSelected={function (publication: PublicationFull): void {
+                    onPublicationSelected={function (publication: PublicationFull | null): void {
                         setSelectedPublication(publication);
                     } } />
             </div>

@@ -73,7 +73,7 @@ import { PublicationFull } from '@uniscale-sdk/ActorCharacter-InfoPanel/sdk/Info
 
 interface PublicationsListProps {
     onTabChange: (tabIndex: string) => void;
-    onPublicationSelected: (publication: PublicationFull) => void;
+    onPublicationSelected: (publication: PublicationFull | null) => void;
     publications: PublicationFull[];
 }
 
@@ -91,7 +91,7 @@ export default function PublicationsList({ onTabChange, onPublicationSelected, p
         setPublicationList(publications);
         if (publications.length == 0) {
             setSelectedPublicationIdentifier(null);
-            onPublicationSelected(null);
+            onPublicationSelected(null)
         } else {
             const firstPublication = publications[0];
             setSelectedPublicationIdentifier(firstPublication.publicationIdentifier as string);

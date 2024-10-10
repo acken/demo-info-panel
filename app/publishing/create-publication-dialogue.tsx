@@ -247,15 +247,19 @@ const CreatePublicationDialogue: React.FC<CreatePublicationDialogueProps> = (pro
             const dispatcher = await initializeDispatcher();
             setDispatcher(dispatcher);
             const user = (await userSession(dispatcher)).user;
-            setAuthorOptions(user.departments);
+            setAuthorOptions(user.departments || []);
             const postTypes = await dispatcher
                 .getTerminology(PublicationsTerminologies.publications.coreData.publicationType.id);
             if (postTypes.success)
-                setPostTypeOptions(postTypes.value.map((code: ITerminologyCode) => code.code));
+                if (Array.isArray(postTypes.value)) {
+                    setPostTypeOptions(postTypes.value.map((code: ITerminologyCode) => code.code));
+                }
             const targetDepartments = await dispatcher
                 .getTerminology(AuthorTerminologies.users.access.department.id);
             if (targetDepartments.success)
-                setTargetDepartmentOptions(targetDepartments.value.map((code: ITerminologyCode) => code.code));
+                if (Array.isArray(targetDepartments.value)) {
+                    setTargetDepartmentOptions(targetDepartments.value.map((code: ITerminologyCode) => code.code));
+                }
         };
         initialize();
     }, []);

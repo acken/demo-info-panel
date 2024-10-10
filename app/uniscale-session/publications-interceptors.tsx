@@ -97,14 +97,15 @@ newPublicationHandler(input?: InfoPanelPlaygroundPublicationsPublicationsEndpoin
    */
 
   if (!input) {
-    return Promise.resolve(Result.badRequest("invalid.input", "Input is required"));
+    return Promise.resolve(Result.badRequest("invalid.input", "Input is required") as unknown as Result<PublicationFull>);
   }
 
   const { title, author, publicationType, shortMessage, body, actionable, targetDepartments } = input;
 
   // Validate required fields
   if (!title || !author || !publicationType || !shortMessage) {
-    return Promise.resolve(Result.badRequest("missing.fields", "Title, author, publication type, and short message are required"));
+    const result = Result.badRequest("missing.fields", "Title, author, publication type, and short message are required") as unknown as Result<PublicationFull>
+    return Promise.resolve(result);
   }
 
   // Check if user is admin or publisher
@@ -157,7 +158,7 @@ getNumberOfActionsSuggestedHandler(input?: InfoPanelPlaygroundPublicationsPublic
   fourWeeksAgo.setDate(now.getDate() - 28);
 
   const actionablePublications = Array.from(publications.values()).filter(publication => {
-    return publication.actionable && publication.publishedAt >= fourWeeksAgo;
+    return publication.actionable && publication.publishedAt !== undefined && publication.publishedAt >= fourWeeksAgo;
   });
 
   return Promise.resolve(Result.ok(actionablePublications.length));
@@ -231,7 +232,7 @@ searchAndFilterPublicationsHandler(input?: InfoPanelPlaygroundPublicationsPublic
    */
 
   if (!input) {
-    return Promise.resolve(Result.badRequest("invalid.input", "Input is required"));
+    return Promise.resolve(Result.badRequest("invalid.input", "Input is required") as unknown as Result<PublicationFull[]>);
   }
 
   const { publicationType, onlyCurrentWeek, onlyActionable, searchQuery } = input;
@@ -252,7 +253,7 @@ searchAndFilterPublicationsHandler(input?: InfoPanelPlaygroundPublicationsPublic
   if (onlyCurrentWeek) {
     const now = new Date();
     const startOfWeek = new Date(now.setDate(now.getDate() - now.getDay()));
-    filteredPublications = filteredPublications.filter(publication => publication.publishedAt >= startOfWeek);
+    filteredPublications = filteredPublications.filter(publication => publication.publishedAt !== undefined && publication.publishedAt >= startOfWeek);
   }
 
   // Search within title, short description, and body
@@ -265,7 +266,10 @@ searchAndFilterPublicationsHandler(input?: InfoPanelPlaygroundPublicationsPublic
   }
 
   // Sort by published date
-  filteredPublications.sort((a, b) => b.publishedAt.getTime() - a.publishedAt.getTime());
+  filteredPublications.sort((a, b) => {
+    if (!b.publishedAt || !a.publishedAt) return 0;
+    return b.publishedAt.getTime() - a.publishedAt.getTime();
+  });
 
   return Promise.resolve(Result.ok(filteredPublications));
 }
